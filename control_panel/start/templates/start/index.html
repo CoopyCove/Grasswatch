@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Greenwatch{% endblock %}
+{% block banner %}
+<p class="title has-text-centered">
+    Welcome to Greenwatch!
+</p>
+<p class="subtitle has-text-centered">
+    Your Lawn Care A.I. Assistant
+</p>
+{% endblock %}
+{% block content %}
+
+{% if not user.is_authenticated %}
+
+<section class="section">
+
+    <h1 class="is-size-3 has-text-centered has-text-weight-bold has-text-success">Hello!</h1>
+
+    <div class="columns is-centered">
+        <div class="column is-one-quarter has-text-right">
+            <h2>Already have an account?</h2>
+            <a class="button is-dark is-medium" href="{% url 'login' %}">
+                Log in here!
+            </a>
+        </div>
+        <div class="column is-one-quarter">
+            <h2>New to Greenwatch?</h2>
+            <a class="button is-success is-medium" href="{% url 'register' %}">
+                Sign up here!
+            </a>
+        </div>
+    </div>
+
+</section>
+
+
+<article class="media block">
+    <div class="media-content">
+        <div class="content">
+                <p class="is-size-5 has-text-centered">Greenwatch is a service dedicated to assessing
+                    your lawn and giving you the the best advice to keep it healthy.           
+                </p> 
+        </div>
+    </div>
+</article>
+
+
+
+
+
+<section class="section">
+    <div class="container">
+        <div class="columns is-centered is-vcentered">
+            <div class="column is-two-fifths">
+                <h1 class="is-size-3 has-text-centered">How does <b class="has-text-success">Greenwatch</b> work?</h1>
+                <p class="is-size-5">Greenwatch manages your lawncare, so you dont have to.
+                     Greenwatch uses AoT cameras to monitor your lawn, keeping track of
+                      any areas of concern and informs you on the current condition your
+                       lawn.
+                </p>          
+            </div>
+            <div class="column is-two-fifths">
+                    <div class="image">
+                        <img src="{% static 'start/grass (1).jpg' %}" alt="Placeholder image">
+                    </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="columns is-centered is-vcentered">
+            <div class="column is-two-fifths">
+                <div class="image">
+                    <img src="{% static 'start/grass (1).jpg' %}" alt="Placeholder image">
+                </div>
+            </div>
+            <div class="column is-two-fifths">
+                <h1 class="is-size-3 has-text-centered">How can <b class="has-text-success">Greenwatch</b> help me?</h1>
+                <p class="is-size-5">Greenwatch keeps track of shifting weather paterns
+                     and the condition of your lawn to make suggestions on how to keep
+                      your grass healthy and notifies you if there are any issues.
+                </p>          
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="columns is-centered  is-vcentered">
+            <div class="column is-two-fifths">
+                <h1 class="is-size-3 has-text-centered">What kinds of things can <b class="has-text-success">Greenwatch</b> do?</h1>
+                <p class="is-size-5">Greenwatch is customizable, it can send notifications based on
+                     your chosen criteria, be it grass height or health. You can choose how and
+                      when you want to reveive notifications.
+                </p>          
+            </div>
+            <div class="column is-two-fifths">
+                    <div class="image">
+                        <img src="{% static 'start/grass (1).jpg' %}" alt="Placeholder image">
+                    </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+{% endif %}
+
+
+
+
+
+
+
+
+
+{% if user.is_authenticated %}
+<div class="block">
+    <h2>Welcome {{ username }}!</h2>
+</div>
+<h1 class="title">Latest Images</h1>
+<div class="columns">
+    <div class="column is-one-third">
+        <div class="card">
+            <div class="card-image">
+                <figure class="image is-4by3">
+                    <img src="{% static 'start/grass (1).jpg' %}" alt="Placeholder image">
+                </figure>
+            </div>
+            <div class="card-content">
+                <div class="media">
+                    <div class="media-left">
+                        <figure class="image is-48x48">
+                            <img src="{% static 'start/wyze_cam.jpg' %}" alt="Placeholder image">
+                        </figure>
+                    </div>
+                    <div class="media-content">
+                        <p class="title is-4">Backyard</p>
+                        <p class="subtitle is-6">Wyze Cam</p>
+                    </div>
+                </div>
+
+                <div class="content">
+                    Healthy (92% Confidence)
+                    <br>
+                    <time datetime="2016-1-1">11:09 PM - 1 Jan 2022</time>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

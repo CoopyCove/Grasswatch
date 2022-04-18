@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Archive - Greenwatch
+{% endblock %}
+
+{% block banner %}
+    <p class="title">
+        Archive
+    </p>
+    <p class="subtitle">
+        See how your lawn has changed over time
+    </p>
+{% endblock %}
+
+{% block content %}
+    <article class="media">
+            <div class="content">
+                <p>
+                    <strong>What is this?</strong>
+                    <br> This is the saved record of how your lawn has been doing recently. 
+                </p>
+
+                {% for row in grouped_images %}
+                <div class="columns">
+                    {% for the_image in row %}
+                    <div class="column">
+                        <div class="tile is-ancestor">
+                            <div class="tile is-15 is-vertical is-parent">
+                            <div class="tile is-child box">
+                                <p class="title">{{the_image.name}}</p>
+                                <img src="{{ the_image.image.url }}" />
+                                <br> Image taken {{the_image.date}}<br>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% if row|length == 1 %}
+                        <div class="column"></div>
+                        <div class="column"></div>
+                    {% endif %}
+                    
+                    {% if row|length == 2 %}
+                        <div class="column"></div>
+                    {% endif %}
+
+                </div>
+                {% endfor %}
+            </div>
+    </article>
+{% endblock %}

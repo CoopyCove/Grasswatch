@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Login - Greenwatch
+{% endblock %}
+
+{% block banner %}
+    <p class="title">
+        Login
+    </p>
+{% endblock %}
+
+{% block content %}
+    <article class="media">
+        <div class="media-content">
+            <div class="content">
+                {% if form.errors %}
+                <p>Oh no! Something is wrong with your login.</p>
+                {% endif %}
+
+        <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            {% if form.errors %}
+                <strong class="input is-danger">{{ form.non_field_errors }}</strong>
+            {% endif %}
+            <div class="field">
+                <label class="label">Username</label>
+                <div class="control">  
+                  <input class="input" type="text" placeholder="Username" required {{ form.username }}
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Password</label>
+                <div class="control">
+                    <input class="input" type="password" placeholder="Password" required {{ form.password }}
+                </div>
+            </div>
+                    <input type="hidden" name="next" value="{{ next }}" />
+            <div class="control">
+                <button class="button is-link">Login</button>
+            </div>
+        </form>
+        </div>
+        </div>
+    </article>
+
+    <article class="media">
+        <div class="media-content">
+            <div class="content">
+                <p>
+                    <strong>Forgot password?</strong>
+                    <a href="{% url 'reset_password' %}">Reset Password</a>
+                </p>
+            </div>
+        </div>
+    </article>
+{% endblock %}

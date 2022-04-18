@@ -1,0 +1,34 @@
+
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css" />
+    </head>
+    <body>
+        <div class="email_header">
+            <p class="is-size-5 has-text-centered">
+                Hello {{ first_name }}!
+            </p>
+        </div>
+        <div class="email_body">
+            {{body}}
+            <p>
+                
+            </p>
+            <p>
+                Image name: {{img_name}}
+            </p>
+            <p>
+                Your grass is : {{img_results}} healthy,
+            </p>
+            <p>
+                Image taken: {{img_date}}
+            </p>
+        </div>
+    
+    </body>
+
+</html>

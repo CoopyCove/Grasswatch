@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Register - Greenwatch
+{% endblock %}
+
+{% block banner %}
+    <p class="title">
+        Register
+    </p>
+    <p class="subtitle">
+        Create a new account and get started right away
+    </p>
+{% endblock %}
+{% block content %}
+    <article class="media">
+        <div class="media-content">
+          <form method="POST" action="{% url 'register' %}">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                <div class="field">
+                    <label class="label">Username</label>
+                    <div class="control">  
+                      <input class="input" type="text" placeholder="Username" required {{ form.username }}
+                    </div>
+                    {% if form.username.errors %}
+                      <ol>
+                        {% for error in form.username.errors %}
+                          <li class="input is-danger"><strong>{{ error|escape }}</strong></li>
+                        {% endfor %}
+                      </ol>
+                    {% endif %}
+                    {{ form.username.help_text }}
+                </div>
+                <div class="field"> 
+                    <label class="label">Email</label>
+                    <div class="control">
+                      <input class="input" type="email" placeholder="Email" required {{ form.email }}
+                    </div>
+                    {% if form.email.errors %}
+                      <ol>
+                        {% for error in form.email.errors %}
+                          <li class="input is-danger"><strong>{{ error|escape }}</strong></li>
+                        {% endfor %}
+                      </ol>
+                    {% endif %}
+                </div>
+                <div class="field">
+                    <label class="label">First Name</label>
+                    <div class="control">
+                      <input class="input" type="text" placeholder="First name" required {{ form.first_name }}
+                    </div>
+                    {% if form.first_name.errors %}
+                      <ol>
+                        {% for error in form.first_name.errors %}
+                          <li class="input is-danger"><strong>{{ error|escape }}</strong></li>
+                        {% endfor %}
+                      </ol>
+                    {% endif %}
+                </div>
+                <div class="field">
+                    <label class="label">Last Name</label>
+                    <div class="control">
+                      <input class="input" type="text" placeholder="Last name" required {{ form.last_name }}
+                    </div>
+                    {% if form.last_name.errors %}
+                      <ol>
+                        {% for error in form.last_name.errors %}
+                          <li class="input is-danger"><strong>{{ error|escape }}</strong></li>
+                        {% endfor %}
+                      </ol>
+                    {% endif %}
+                </div>
+                <div class="field">
+                    <label class="label">Password</label>
+                    <div class="control">
+                      <input class="input" type="password" placeholder="Password" required {{ form.password1 }} 
+                    </div>
+                    {% if form.password1.errors %}
+                      <ol>
+                        {% for error in form.password1.errors %}
+                          <li class="input is-danger"><strong>{{ error|escape }}</strong></li>
+                        {% endfor %}
+                      </ol>
+                    {% endif %}
+                    {{ form.password1.help_text }}
+                </div>
+                <div class="field">
+                    <label class="label">Password Conformation</label>
+                    <div class="control">
+                      <input class="input" type="password" placeholder="Enter the same password as before" required {{ form.password2 }}
+                    </div> 
+                      {% if form.password2.errors %}
+                      <ol>
+                        {% for error in form.password2.errors %}
+                          <li class="input is-danger"><strong>{{ error|escape }}</strong></li>
+                        {% endfor %}
+                      </ol>
+                    {% endif %}
+                    </div>
+                    <div class="control">
+                        <button class="button is-link">Create New Account</button>
+                    </div>
+            </form>
+        </div>
+    </article>
+{% endblock %}

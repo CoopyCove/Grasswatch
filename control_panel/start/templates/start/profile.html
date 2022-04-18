@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+My Profile - Greenwatch
+{% endblock %}
+
+{% block banner %}
+    <p class="title">
+        My Profile
+    </p>
+    <p class="subtitle">
+        View your account details, update your contact settings, set-up notifications, or reset your password
+    </p>
+{% endblock %}
+
+{% block content %}
+    <article class="media">
+        <div class="media-content">
+            <div class="content">
+                <p>
+                    <strong>What will I do here?</strong>
+                    <br> This will be our settings page where you will be able to set your
+                    preferences such as how we will be communicating with you on your lawn
+                </p>
+            </div>
+        </div>
+    </article>
+    <article class="media">
+        <div class="media-content">
+            <div class="content">
+                <strong>User Information:</strong>
+                <h1>Welcome, {{ user.username }}</h1>
+                <h2>This is your profile!</h2>
+                <h3>This account is registered under {{ user.email }}</h3>
+            </div>
+        </div>
+    </article>
+
+    <article class="media">
+        <div class="media-content">
+            <p><strong>Profile settings:</strong></p><br>
+            <form method="POST" action="{% url 'profile' %}">
+                {% csrf_token %}
+                {{ u_form.as_p }}
+                {{ n_form.as_p }}
+                <input type="submit" value="Save Changes">
+            </form>
+        </div>
+    </article>
+
+    <article class="media">
+        <div class="media-content">
+            <div class="content">
+                <a href="{% url 'reset_password' %}">Reset Your Password</a>
+            </div>
+        </div>
+    </article>
+{% endblock %}
