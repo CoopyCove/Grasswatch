@@ -6,10 +6,10 @@ Archive - Greenwatch
 {% endblock %}
 
 {% block banner %}
-    <p class="title">
+    <p class="title has-text-centered">
         Archive
     </p>
-    <p class="subtitle">
+    <p class="subtitle has-text-centered">
         See how your lawn has changed over time
     </p>
 {% endblock %}
@@ -29,8 +29,10 @@ Archive - Greenwatch
                         <div class="tile is-ancestor">
                             <div class="tile is-15 is-vertical is-parent">
                             <div class="tile is-child box">
+                                <span class="tag is-success">Camera: {{ the_image.camera.name }}</span>
                                 <p class="title">{{the_image.name}}</p>
                                 <img src="{{ the_image.image.url }}" />
+                                <p>Assessment: <span class="tag is-success is-medium">{{ the_image.results }}</span></p>
                                 <br> Image taken {{the_image.date}}<br>
                             </div>
                             </div>

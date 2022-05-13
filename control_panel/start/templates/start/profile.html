@@ -6,54 +6,205 @@ My Profile - Greenwatch
 {% endblock %}
 
 {% block banner %}
-    <p class="title">
-        My Profile
-    </p>
-    <p class="subtitle">
-        View your account details, update your contact settings, set-up notifications, or reset your password
-    </p>
+<p class="title">
+    My Profile
+</p>
+<p class="subtitle">
+    View your account details, update your contact settings, set-up notifications, or reset your password
+</p>
 {% endblock %}
 
 {% block content %}
-    <article class="media">
-        <div class="media-content">
-            <div class="content">
-                <p>
-                    <strong>What will I do here?</strong>
-                    <br> This will be our settings page where you will be able to set your
-                    preferences such as how we will be communicating with you on your lawn
-                </p>
-            </div>
+<article class="media">
+    <div class="media-content">
+        <div class="content">
+            <p>
+                <strong>What will I do here?</strong>
+                <br> This will be our settings page where you will be able to set your
+                preferences such as how we will be communicating with you on your lawn
+            </p>
         </div>
-    </article>
-    <article class="media">
-        <div class="media-content">
-            <div class="content">
-                <strong>User Information:</strong>
-                <h1>Welcome, {{ user.username }}</h1>
-                <h2>This is your profile!</h2>
-                <h3>This account is registered under {{ user.email }}</h3>
-            </div>
-        </div>
-    </article>
+    </div>
+</article>
 
-    <article class="media">
-        <div class="media-content">
-            <p><strong>Profile settings:</strong></p><br>
-            <form method="POST" action="{% url 'profile' %}">
-                {% csrf_token %}
-                {{ u_form.as_p }}
-                {{ n_form.as_p }}
-                <input type="submit" value="Save Changes">
-            </form>
+<div class="media block">
+    <div class="media-content">
+        <div class="content">
+            <strong>User Information:</strong>
+            <br>Hello, {{ user.username }}!
+            <br> This account is registered under {{ user.email }}
         </div>
-    </article>
+    </div>
+</div>
 
-    <article class="media">
-        <div class="media-content">
-            <div class="content">
-                <a href="{% url 'reset_password' %}">Reset Your Password</a>
+<div class="box">
+    <h4 class="title is-4">New Camera Setup</h4>
+    <form method="POST" action="{% url 'profile' %}">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class="field">
+            <label class="label">Name</label>
+            <div class="control">
+                {{ form.name }}
+            </div>
+            {% if form.name.errors %}
+            <ol>
+                {% for error in form.name.errors %}
+                <li class="input is-danger"><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+            </ol>
+            {% endif %}
+            {{ form.name.help_text }}
+        </div>
+        <div class="field">
+            <label class="label">RTSP Url</label>
+            <div class="control">
+                {{ form.rtsp_url }}
+            </div>
+            {% if form.rtsp_url.errors %}
+            <ol>
+                {% for error in form.rtsp_url.errors %}
+                <li class="input is-danger"><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+            </ol>
+            {% endif %}
+            {{ form.rtsp_url.help_text }}
+        </div>
+        <div class="field">
+            <label class="label">Camera Type</label>
+            <div class="control">
+                <div class="select" required>
+                    {{ form.camera }}
+                </div>
             </div>
         </div>
-    </article>
+        <button class="button is-success" name="Camera" type="Submit">Add Camera</button>
+
+    </form>
+
+</div>
+
+<div class="box">
+    <h4 class="title is-4">Existing Cameras</h4>
+    {% for row in grouped_cameras %}
+    <div class="columns">
+        {% for the_camera in row %}
+        <div class="column">
+            <div class="tile is-ancestor">
+                <div class="tile is-15 is-vertical is-parent">
+                    <div class="tile is-child box notification is-light">
+                        <h4 class="title is-4">{{ the_camera.name }}</h4>
+                        <div class="block">
+                            <p>URL: {{the_camera.rtsp_url}}</p>
+                            <p>Camera Type: {{the_camera.camera}}</p>
+                        </div>
+                        <div class="block">
+                            <form method="POST" action="{% url 'profile' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="camera_id" value="{{ the_camera.id }}">
+                                <div class="field">
+                                    <div class="control">
+                                        <button type="submit" class="button is-danger" name="Delete"
+                                            value="Delete Camera">Delete Camera</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        {% if row|length == 1 %}
+        <div class="column"></div>
+        <div class="column"></div>
+        {% endif %}
+
+        {% if row|length == 2 %}
+        <div class="column"></div>
+        {% endif %}
+
+        {% endfor %}
+    </div>
+</div>
+
+<div class="box">
+    <h4 class="title is-4">Profile Settings</h4>
+    <form method="POST" action="{% url 'profile' %}">
+        {% csrf_token %}
+        {{ u_form.non_field_errors }}
+        <div class="field">
+            <label class="label">Username</label>
+            <div class="control">
+                {{ u_form.username }}
+            </div>
+            {% if u_form.username.errors %}
+            <ol>
+                {% for error in u_form.username.errors %}
+                <li class="input is-danger"><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+            </ol>
+            {% endif %}
+            {{ u_form.username.help_text }}
+        </div>
+
+        <div class="field">
+            <label class="label">Email</label>
+            <div class="control">
+                {{ u_form.email }}
+            </div>
+            {% if u_form.email.errors %}
+            <ol>
+                {% for error in u_form.email.errors %}
+                <li class="input is-danger"><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+            </ol>
+            {% endif %}
+        </div>
+        <div class="block">
+            <a href="{% url 'reset_password' %}">Reset Your Password</a>
+        </div>
+            {{ n_form.non_field_errors }}
+            <div class="field">
+                <label class="label">Notifications</label>
+                <div class="control">
+                    <label class="checkbox">
+                        {{ n_form.SMS_notifications }}
+                        SMS Notifications
+                    </label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <label class="checkbox">
+                        {{ n_form.email_notifications }}
+                        Email Notifications
+                    </label>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Notification Schedule</label>
+                <div class="control">
+                    <div class="select">
+                        {{ n_form.notification_interval }}
+                    </div>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Phone Number</label>
+                <div class="control">
+                    {{ n_form.phone_number }}
+                </div>
+            </div>
+            <button type="submit" class="button is-success" name="Save" value="Save Changes">Save Changes</button>
+    </form>
+</div>
+
+<article class="media">
+    <div class="media-content">
+        <div class="content">
+        </div>
+    </div>
+</article>
 {% endblock %}

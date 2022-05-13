@@ -27,7 +27,7 @@
             <div class="field">
               <label class="label">Email</label>
               <div class="control has-icons-left has-icons-right">
-                <input class="input is-danger" type="email" name="contact-email" placeholder="Email" value="">
+                <input class="input" type="email" name="contact-email" placeholder="Email" value="">
                 <span class="icon is-small is-left">
                   <i class="fas fa-envelope"></i>
                 </span>
@@ -35,7 +35,7 @@
                   <i class="fas fa-exclamation-triangle"></i>
                 </span>
               </div>
-              <p class="help is-danger">This email is invalid</p>
+              <!--<p class="help is-danger">This email is invalid</p>-->
             </div> 
                   
             <div class="field">
@@ -57,9 +57,10 @@
   </form>
 
 </section>
+{% if contact_name %}
 <h1 class="is-size-3 has-text-centered has-text-weight-bold has-text-success">
   Thank you, {{ contact_name }}, your message has been sent!
 </h1>
-
+{% endif %}
 
 {% endblock %}

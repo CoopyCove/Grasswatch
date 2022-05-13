@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Settings - Greenwatch
+{% endblock %}
+
+{% block banner %}
+    <p class="title has-text-centered">
+        Settings
+    </p>
+    <p class="subtitle has-text-centered">
+        Update your contact settings, set-up notifications, or reset your password
+    </p>
+{% endblock %}
+
+{% block content %}
+    <article class="media">
+        <div class="media-content">
+            <div class="content">
+                <p>
+                    <strong>What will I do here?</strong>
+                    <br> This will be our settings page where you will be able to set your
+                    prefernces such as how we will be communicating with you on your lawn
+                </p>
+            </div>
+        </div>
+    </article>
+
+    <article class="media">
+        <div class="media-content">
+            <div class="content">
+                <a href="{% url 'reset_password' %}">Reset Your Password</a>
+            </div>
+        </div>
+    </article>
+
+    <article class="media">
+        <div class="media-content">
+            <p><strong>Notification settings:</strong></p><br>
+            <form method="POST" action="{% url 'settings' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Save Changes">
+            </form>
+        </div>
+    </article>
+{% endblock %}

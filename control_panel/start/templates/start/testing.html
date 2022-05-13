@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}About - Greenwatch{% endblock %}
+
+{% block content %}
+
+
+
+    <form method="POST" action="{% url 'testing' %}">
+ {% csrf_token %}
+ <!--sends email notification-->
+ <h1 class="title">
+ sends email notification to the current logged in user
+ </h1>
+ <div class="control">
+ <button class="button is-link is-success">
+ Send Notification
+ </button>
+ </div>
+
+</form>
+
+</section>
+
+
+
+
+
+{% endblock %}

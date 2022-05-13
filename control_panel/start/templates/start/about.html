@@ -10,27 +10,31 @@
 
 
 {% block content %}
+
+
 <section class="section">
-    <h1>Hello: {{ username }}</h1>
-    <h1>results: {{the_image.results}}</h1>
-    <h1>date: {{the_image.date}}</h1>
-
-    <form method="POST" action="{% url 'about' %}">
-        {% csrf_token %}
-        <!--sends email notification-->
-        <h1 class="title">
-            sends email notification to the current logged in user
-        </h1>
-        <div class="control">
-            <button class="button is-link is-success">
-                Send Notification
-            </button>
+    <div class="container">
+        <div class="columns is-centered is-vcentered">
+            <div class="column is-two-fifths">
+                <h1 class="is-size-3 has-text-centered">Who made <b class="has-text-success">Greenwatch</b> ?</h1>
+                <p class="is-size-5 has-text-centered">Greenwatch was developed by a group of Computer Science students
+                    at California State University.</p>
+                <br>
+                <block>
+                    <ul class="is-size-5 has-text-centered">
+                        <li>Carlos Gutierrez</li>
+                        <li>Daniel Rivera Guerrero</li>
+                        <li>Ernesto Gomez</li>
+                        <li>Nicholas Barrios</li>
+                        <li>Steven Condor</li>
+                    </ul>          
+                </block>
+            </div>
         </div>
-
-
-    </form>
-
+    </div>
 </section>
+
+
 
 <section>
     <div class="container">
@@ -39,6 +43,15 @@
         </h1>
     </div>
 </section>
+
+<article class="media block">
+    <div class="media-content">
+        <div class="content">
+                <p class="is-size-5 has-text-centered">A list of technologies that helped make our project possible.           
+                </p> 
+        </div>
+    </div>
+</article>
 
 <section>
     <div class="columns">

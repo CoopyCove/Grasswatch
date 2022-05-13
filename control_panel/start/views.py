@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
-from .forms import ExtendedUserCreationForm, NotificationsForm, UserUpdateForm
+from .forms import CamForm, ExtendedUserCreationForm, NotificationsForm, UserUpdateForm
 from camera.models import Camera, Image
+from django.core.exceptions import ObjectDoesNotExist
+from .models import ExtendedUser
 
 from .notifications import notify, notify2
 from django.core.paginator import Paginator
@@ -15,23 +17,55 @@ def index(request):
 
 @login_required
 def profile(request):
-    if request.method =='POST':
-        u_form = UserUpdateForm(request.POST, instance = request.user)
-        n_form = NotificationsForm(request.POST, instance=request.user.extendeduser)
-        if u_form.is_valid() and n_form.is_valid():
-            u_form.save()
-            n_form.save()
-            return redirect('profile')
-    else:
-        u_form = UserUpdateForm(instance = request.user)
-        n_form = NotificationsForm(instance=request.user.extendeduser)
+    cameralist = Camera.objects.filter(user=request.user.id)
+    the_camera = Paginator(cameralist,3)
 
-    context = {"u_form" : u_form, "n_form" : n_form}
+    grouped_cameras = []
+    for page in the_camera.page_range:
+        camera_objects = the_camera.page(page).object_list
+        grouped_cameras.append(camera_objects)
+        
+    camera_form = CamForm()
+    user_form = UserUpdateForm(instance = request.user)
+    try:
+        notifications_form = NotificationsForm(instance=request.user.extendeduser)
+    except ObjectDoesNotExist:
+        ExtendedUser.objects.create(user=request.user)
+        notifications_form = NotificationsForm(instance=request.user.extendeduser)
+
+    if request.method =='POST' and 'Save' in request.POST:
+        user_form = UserUpdateForm(request.POST, instance = request.user)
+        notifications_form = NotificationsForm(request.POST, instance=request.user.extendeduser)
+        if user_form.is_valid() and notifications_form.is_valid():
+            user_form.save()
+            notifications_form.save()
+            return redirect('profile')
+    elif request.method =='POST' and 'Camera' in request.POST:
+        camera_form = CamForm(request.POST)
+        if camera_form.is_valid():
+            camera = camera_form.save(commit=False)
+            camera.user = request.user
+            camera.save()
+            return redirect('profile')
+    elif request.method =='POST' and 'Delete' in request.POST:
+        camera_id = request.POST['camera_id']
+        try:
+            Camera.objects.get(id=camera_id).delete()
+        except Camera.DoesNotExist:
+            pass
+        return redirect('profile')
+    
+    context = {"u_form" : user_form, "n_form" : notifications_form, "form" : camera_form, 'the_camera' : the_camera, 'grouped_cameras' : grouped_cameras}
     return render(request, 'start/profile.html', context)
 
 @login_required
 def archive(request):
-    imagelist = Image.objects.all()
+    imagelist = []
+    cameraList = Camera.objects.filter(user=request.user.id)
+    for camera in cameraList:
+        image_list = Image.objects.filter(camera=camera.id)
+        for img in image_list:
+            imagelist.append(img)
 
     the_image = Paginator(imagelist, 3)
 
@@ -63,18 +97,7 @@ def register(request):
     return render(request, 'start/register.html', context)
 
 def about(request):
-    #temp method for testing functionality
-    if request.method == 'POST':
-        
-        the_image = Image.objects.get(pk=1)
-        
-        notify2(request, att=the_image)
         return render(request, 'start/about.html')
-    
-    else:    
-        the_image = Image.objects.get(pk=1)
-        context = {'the_image' : the_image}
-        return render(request, 'start/about.html', context)
 
 
 def contact(request):
@@ -88,3 +111,18 @@ def contact(request):
         
     else:
         return render(request, 'start/contact.html')
+    
+#Temporary page for testing functionality    
+def testing(request):
+    
+    if request.method == 'POST':
+        
+        the_image = Image.objects.get(pk=1)
+        
+        notify2(request, att=the_image)
+        return render(request, 'start/testing.html')
+    
+    else:    
+        the_image = Image.objects.get(pk=1)
+        context = {'the_image' : the_image}
+        return render(request, 'start/testing.html', context)

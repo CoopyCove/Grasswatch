@@ -1,6 +1,9 @@
 from django import forms 
+from django.forms import ModelForm
 from django.contrib.auth.models import User 
 from django.contrib.auth.forms import UserCreationForm
+
+from camera.models import Camera
 from .models import ExtendedUser
 
 class ExtendedUserCreationForm(UserCreationForm):
@@ -26,7 +29,7 @@ class ExtendedUserCreationForm(UserCreationForm):
 class NotificationsForm(forms.ModelForm):
     class Meta:
         model = ExtendedUser
-        fields = ['SMS_notifications', 'email_notifications', 'phone_number']
+        fields = ['SMS_notifications', 'email_notifications', 'phone_number','notification_interval']
 
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()
@@ -34,3 +37,8 @@ class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'email']
+
+class CamForm(ModelForm):
+    class Meta:
+        model = Camera
+        fields = ['name', 'rtsp_url', 'camera']

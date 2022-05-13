@@ -41,6 +41,7 @@ class Base(Configuration):
         'django.contrib.staticfiles',
         'start',
         'camera',
+        #'django_crontab',
     ]
 
     MIDDLEWARE = [

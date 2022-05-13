@@ -1,34 +1,72 @@
-
-
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css" />
     </head>
-    <body>
-        <div class="email_header">
-            <p class="is-size-5 has-text-centered">
-                Hello {{ first_name }}!
-            </p>
-        </div>
-        <div class="email_body">
-            {{body}}
-            <p>
-                
-            </p>
-            <p>
-                Image name: {{img_name}}
-            </p>
-            <p>
-                Your grass is : {{img_results}} healthy,
-            </p>
-            <p>
-                Image taken: {{img_date}}
-            </p>
-        </div>
+
+    <body style="background-color:#f9fdf5; margin: 0; padding: 0;" >
+
+
+        <table width="45%" border="0" cellspacing="0" cellpadding="0" align="center">
+
+            <tr class="email_banner">
+                <td align="center">
+                    <img style="height: 100px;" src="https://greenwatch.eastus.cloudapp.azure.com/static/start/greenwatch_logo.png" />
+                </td>
+            </tr>
+
+            <tr class="email_greeting">
+                <td style="vertical-align: middle;
+                 height: 300px;
+                   text-align: center;
+                    background-color:green;
+                     background-image: url(https://cdn.80.lv/api/upload/content/c2/images/5fcdfa6b730fe/widen_920x0.jpg) ">
+                    <img style="height: 100px;" src="https://greenwatch.eastus.cloudapp.azure.com/static/start/greenwatch_logo.png" />
+                    <p style="color:white;
+                     font-family:georgia;
+                      font-size: 50px;">
+                        Hello {{ first_name }}!
+                    </p>
+                    
+                </td>
+            </tr>
+
+            <div>
+                <tr class="email_body">
+                    <td style="vertical-align: middle;
+                     height: 200px;
+                      text-align: center;
+                       background-color:#f0f9e8;" >
+                            <!--{{body}}-->
+                        
+                        <p style="color:green;
+                        font-size: 35px;
+                         font-family:arial;">
+                            Your grass is: {{img_results}} healthy
+                        
+                        <p style="font-size: 30px;">
+                            On: {{img_date}}
+                        </p>
+                    </td> 
+                </tr>
+
+            <tr class="email_settings">
+                <td align="center">
+                    <p>
+                        This email was sent automatically by the Greenwatch panel
+                    </p>
+                    <a class="button" href="https://greenwatch.eastus.cloudapp.azure.com/">
+                        Change email notification settings
+                    </a>
+                </td>
+            </tr>
+
+
+
+
+        </table>
+
+        
     
     </body>
 
 </html>
+
