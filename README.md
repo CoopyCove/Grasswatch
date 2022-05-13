@@ -9,4 +9,4 @@ Enter in command window "python manage.py migrate"
 Secondly, enter "python manage.py runserver"
 Lastly copy "http://127.0.0.1:8000/" into web search bar.
 
-Website is still in progress
+Website completed 8th of May 2022
